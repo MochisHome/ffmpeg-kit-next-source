@@ -1,0 +1,175 @@
+{
+  "schema": 1,
+  "release": "v9.0.0",
+  "build_date": "2026-09-23",
+  "manual_source_changes": false,
+  "build_time_source_changes": {
+    "component": "ffmpeg",
+    "applied_by": "scripts/apple/ffmpeg.sh and scripts/android/ffmpeg.sh of ffmpeg-kit-next (automatically, at build time)",
+    "date": "2026-09-23",
+    "files": [
+      {
+        "path": "libavformat/file.c",
+        "platforms": [
+          "ios",
+          "android"
+        ]
+      },
+      {
+        "path": "libavformat/hls.c",
+        "platforms": [
+          "ios",
+          "android"
+        ]
+      },
+      {
+        "path": "libavformat/protocols.c",
+        "platforms": [
+          "ios",
+          "android"
+        ]
+      },
+      {
+        "path": "libavutil/file.c",
+        "platforms": [
+          "ios",
+          "android"
+        ]
+      },
+      {
+        "path": "libavutil/file.h",
+        "platforms": [
+          "ios",
+          "android"
+        ]
+      },
+      {
+        "path": "libavutil/log.c",
+        "platforms": [
+          "ios",
+          "android"
+        ]
+      },
+      {
+        "path": "configure",
+        "platforms": [
+          "ios"
+        ]
+      },
+      {
+        "path": "ffbuild/common.mak",
+        "platforms": [
+          "ios"
+        ]
+      }
+    ],
+    "patches": {
+      "ios": "patches/ffmpeg-n9.0.1-ios-build-changes.patch",
+      "android": "patches/ffmpeg-n9.0.1-android-build-changes.patch"
+    },
+    "patches_base": "n9.0.1",
+    "note": "The patches document the changes only. The FFmpeg source archive is the unmodified n9.0.1 source; the build scripts apply these changes automatically at build time. The ios patch contains the build directory path (/tmp/ffkit-ios) in ffbuild/common.mak."
+  },
+  "integration_changes": {
+    "component": "ffmpeg-kit-next",
+    "made_by": "app publisher",
+    "files": [
+      "react-native/package.json",
+      "react-native/android/build.gradle"
+    ],
+    "modified_files": "modifications/react-native/",
+    "diff": "modifications/react-native.diff"
+  },
+  "host_toolchain": {
+    "ios": {
+      "xcode": "27.0",
+      "ios_sdk": "27.0",
+      "note": "Xcode is provided by the host machine; the nix devShell provides the rest of the toolchain"
+    }
+  },
+  "components": {
+    "ffmpeg-kit-next": {
+      "version": "9.0.0",
+      "repository": "https://github.com/arthenica/ffmpeg-kit-next",
+      "commit": "5e51b2da4c3593c0f2f9b49f53eeb497d93e39d3",
+      "license": "LGPL-3.0-or-later",
+      "source_archive": "ffmpeg-kit-next-5e51b2d-source.tar.gz",
+      "source_archive_sha256": "7d2db69d1d7617ede2a58ceadea078793d09060485ea116ee2b9b0a955724b65"
+    },
+    "ffmpeg": {
+      "tag": "n9.0.1",
+      "repository": "https://github.com/arthenica/FFmpeg",
+      "commit": "bf1b838f2ab88b4f8fd83443325c782ea0e0f7fa",
+      "license": "LGPL-3.0-or-later (configured with --enable-version3; without --enable-gpl and without --enable-nonfree)",
+      "build_time_patches": "See build_time_source_changes. The source archive is the unmodified n9.0.1 source (git archive of the tag); the changes are documented in patches/.",
+      "source_archive": "ffmpeg-n9.0.1-source.tar.gz",
+      "source_archive_sha256": "eef4b0716badad6c3234c7b8347b62826df07839cb195f570d12f2e1aea264fb",
+      "note": "Tag n9.0.1 in arthenica/FFmpeg is the same Git object as the official FFmpeg tag n9.0.1."
+    },
+    "cpu-features": {
+      "tag": "v0.11.0",
+      "repository": "https://github.com/arthenica/cpu_features",
+      "commit": "81d13c49649f0714dd41fb56bb246398b6584085",
+      "license": "Apache-2.0",
+      "platforms": [
+        "android"
+      ],
+      "source_archive": "cpu-features-source.tar.gz",
+      "source_archive_sha256": "66104a946844f8529b68c858ad0894f2bbf710f104e3239a96565af4f78bb89d"
+    },
+    "smart-exception": {
+      "version": "0.2.1",
+      "repository": "https://github.com/tanersener/smart-exception",
+      "maven_coordinates": [
+        "com.arthenica:smart-exception-java:0.2.1",
+        "com.arthenica:smart-exception-common:0.2.1"
+      ],
+      "license": "BSD-3-Clause",
+      "platforms": [
+        "android"
+      ]
+    }
+  },
+  "builds": {
+    "ios": {
+      "command": "./nix-ios.sh -p xcode26 -x --target=16.4 --arch=arm64,arm64-simulator --enable-lib-ios-audiotoolbox --enable-lib-ios-avfoundation --enable-lib-ios-videotoolbox --enable-lib-ios-zlib --enable-lib-ios-libiconv",
+      "nix_devshell": "xcode26",
+      "flags": [
+        "-x",
+        "--target=16.4",
+        "--arch=arm64,arm64-simulator",
+        "--enable-lib-ios-audiotoolbox",
+        "--enable-lib-ios-avfoundation",
+        "--enable-lib-ios-videotoolbox",
+        "--enable-lib-ios-zlib",
+        "--enable-lib-ios-libiconv"
+      ],
+      "min_ios_version": "16.4",
+      "output": "prebuilt/bundle-apple-xcframework-ios-16.4/",
+      "linking": "dynamic (8 dynamic xcframeworks: ffmpegkit, libavcodec, libavdevice, libavfilter, libavformat, libavutil, libswresample, libswscale)",
+      "distributed_archive_sha256": "75f9b418531125b082254f7d3c2a8c7c802519d08d3f21279a071a781db241cf",
+      "linking_note": "The FFmpegKitNext React Native bridge is not dynamically linked: its native part is statically linked into the app executable and its JavaScript part is included in the app's JavaScript bundle."
+    },
+    "android": {
+      "command": "./nix-android.sh -p android-r27d --arch=arm64-v8a --enable-lib-android-media-codec --enable-lib-android-zlib",
+      "nix_devshell": "android-r27d",
+      "flags": [
+        "--arch=arm64-v8a",
+        "--enable-lib-android-media-codec",
+        "--enable-lib-android-zlib"
+      ],
+      "output": "prebuilt/bundle-android-aar-24-maven/",
+      "maven_coordinate": "com.arthenica:ffmpeg-kit-next:9.0.0",
+      "linking": "dynamic (shared libraries .so inside the AAR)",
+      "distributed_archive_sha256": "2e169b107e27946f4082936130a27eeb9b38dd0c8182cebd3f6f3676622fbd41",
+      "linking_note": "The FFmpegKitNext Java API layer (and smart-exception) is compiled into the app's DEX files and is not dynamically linked. cpu-features is statically linked into libffmpegkit_abidetect.so."
+    }
+  },
+  "not_enabled": [
+    "--enable-gpl",
+    "--enable-nonfree",
+    "x264",
+    "x265",
+    "fdk-aac"
+  ]
+}

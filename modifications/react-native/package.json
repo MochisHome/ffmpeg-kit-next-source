@@ -1,0 +1,27 @@
+{
+  "name": "ffmpeg-kit-next-react-native",
+  "version": "9.0.0",
+  "private": true,
+  "description": "FFmpeg Kit Next for React Native",
+  "main": "src/index",
+  "types": "src/index.d.ts",
+  "react-native": "src/index",
+  "source": "src/index",
+  "author": "ARTHENICA <open-source@arthenica.com> (https://www.arthenica.com)",
+  "repository": "https://github.com/arthenica/ffmpeg-kit-next",
+  "homepage": "https://github.com/arthenica/ffmpeg-kit-next",
+  "license": "LGPL-3.0-or-later",
+  "licenseNote": "LGPL build (no --enable-gpl/nonfree). See BUILD.md. Corresponding Source: https://github.com/MochisHome/ffmpeg-kit-next-source",
+  "codegenConfig": {
+    "name": "FFmpegKitReactNativeSpec",
+    "type": "modules",
+    "jsSrcsDir": "src",
+    "android": {
+      "javaPackageName": "com.arthenica.ffmpegkit.reactnative"
+    }
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*"
+  }
+}
